@@ -1,0 +1,194 @@
+from flask import Flask, request, jsonify
+import os
+from rich.console import Console
+from rich.panel import Panel
+from rich.pretty import pprint
+from datetime import datetime
+import requests
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Configuration
+CHATWOOT_BASE_URL = os.getenv('CHATWOOT_BASE_URL')
+CHATWOOT_API_TOKEN = os.getenv('CHATWOOT_API_TOKEN')
+CHATWOOT_ACCOUNT_ID = os.getenv('CHATWOOT_ACCOUNT_ID')
+MISTRAL_ENDPOINT = os.getenv('MISTRAL_ENDPOINT')
+
+app = Flask(__name__)
+console = Console()
+
+def get_mistral_response(message):
+    """Get response from Mistral API using Ollama"""
+    try:
+        headers = {'Content-Type': 'application/json'}
+        payload = {
+            'model': 'mistral',
+            'prompt': message,
+            'stream': False
+        }
+        
+        response = requests.post(f"{MISTRAL_ENDPOINT}/api/generate", json=payload, headers=headers)
+        response.raise_for_status()
+        
+        # Log the raw response for debugging
+        console.print(Panel(
+            f"[bold cyan]Mistral Raw Response[/bold cyan]\n{response.text}",
+            border_style="cyan"
+        ))
+        
+        data = response.json()
+        # Handle different response formats
+        if 'response' in data:
+            return data['response']
+        elif 'choices' in data and len(data['choices']) > 0:
+            return data['choices'][0].get('text', '')
+        else:
+            console.print(Panel(
+                f"[bold yellow]Unexpected Response Format[/bold yellow]\n{data}",
+                border_style="yellow"
+            ))
+            return 'I apologize, but I encountered an unexpected response format. Please try again.'
+        
+    except requests.exceptions.RequestException as e:
+        console.print(Panel(
+            f"[bold red]Mistral API Error[/bold red]\n{str(e)}",
+            border_style="red"
+        ))
+        return f"I apologize, but I'm having trouble connecting to my AI backend: {str(e)}"
+    except Exception as e:
+        console.print(Panel(
+            f"[bold red]Unexpected Error[/bold red]\n{str(e)}",
+            border_style="red"
+        ))
+        return f"I apologize, but an unexpected error occurred: {str(e)}"
+
+def send_chatwoot_reply(conversation_id, message):
+    """Send reply back to Chatwoot conversation"""
+    try:
+        # Get account_id from environment variable
+        account_id = os.getenv('CHATWOOT_ACCOUNT_ID')
+        if not account_id:
+            console.print(Panel(
+                "[bold red]CHATWOOT_ACCOUNT_ID not set in environment variables[/bold red]",
+                border_style="red"
+            ))
+            return False
+
+        url = f"{CHATWOOT_BASE_URL}/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages"
+        headers = {
+            'api_access_token': CHATWOOT_API_TOKEN,
+            'Content-Type': 'application/json'
+        }
+        payload = {
+            'content': message,
+            'message_type': 'outgoing'
+        }
+        
+        console.print(f"[bold cyan]Sending to URL:[/bold cyan] {url}")
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()
+        
+        console.print(Panel(
+            f"[bold green]Reply Sent to Chatwoot[/bold green]\nConversation ID: {conversation_id}\nMessage: {message}",
+            border_style="green"
+        ))
+        
+        return True
+        
+    except requests.exceptions.RequestException as e:
+        console.print(Panel(
+            f"[bold red]Chatwoot API Error[/bold red]\n{str(e)}\nURL: {url}\nHeaders: {headers}\nPayload: {payload}",
+            border_style="red"
+        ))
+        return False
+
+@app.route('/webhook', methods=['POST'])
+def chatwoot_webhook():
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    webhook_data = request.json
+    
+    # Log incoming webhook
+    console.print("\n")
+    console.print(Panel(
+        f"[bold blue]Webhook Received at {timestamp}[/bold blue]",
+        border_style="blue"
+    ))
+    console.print("[bold green]Webhook Payload:[/bold green]")
+    pprint(webhook_data, expand_all=True)
+    
+    try:
+        event_type = webhook_data.get('event')
+        console.print(f"[bold yellow]Event Type:[/bold yellow] {event_type}")
+        
+        # Extract message data from the messages array
+        messages = webhook_data.get('messages', [])
+        if not messages:
+            console.print("[bold yellow]No messages found in webhook data[/bold yellow]")
+            return jsonify({'status': 'success'}), 200
+            
+        # Get the latest message
+        message_data = messages[0]
+        console.print("[bold yellow]Message Data:[/bold yellow]")
+        pprint(message_data, expand_all=True)
+        
+        # Process only incoming messages (message_type 0 is incoming in Chatwoot)
+        message_type = message_data.get('message_type')
+        console.print(f"[bold yellow]Message Type:[/bold yellow] {message_type}")
+        
+        if message_type == 0:  # 0 represents incoming message in Chatwoot
+            conversation_id = message_data.get('conversation_id')
+            content = message_data.get('content', '').strip()
+            
+            console.print(Panel(
+                f"[bold yellow]Processing Message[/bold yellow]\n"
+                f"Conversation ID: {conversation_id}\n"
+                f"Content: {content}",
+                border_style="yellow"
+            ))
+            
+            if content and conversation_id:
+                # Get AI response from Mistral
+                console.print("[bold cyan]Requesting Mistral Response...[/bold cyan]")
+                ai_response = get_mistral_response(content)
+                console.print(f"[bold cyan]Mistral Response:[/bold cyan] {ai_response}")
+                
+                # Send response back to Chatwoot and verify success
+                if ai_response:
+                    console.print("[bold cyan]Sending response to Chatwoot...[/bold cyan]")
+                    if not send_chatwoot_reply(conversation_id, ai_response):
+                        error_msg = "Failed to send response to Chatwoot"
+                        console.print(Panel(
+                            f"[bold red]{error_msg}[/bold red]",
+                            border_style="red"
+                        ))
+                        return jsonify({'status': 'error', 'message': error_msg}), 500
+                    else:
+                        console.print("[bold green]Successfully sent response to Chatwoot[/bold green]")
+            else:
+                console.print("[bold yellow]Skipping: Empty content or missing conversation ID[/bold yellow]")
+        else:
+            console.print(f"[bold yellow]Skipping: Message type is {message_type} (not incoming)[/bold yellow]")
+        
+        return jsonify({'status': 'success'}), 200
+        
+    except Exception as e:
+        error_msg = f"Error Processing Webhook: {str(e)}"
+        console.print(Panel(
+            f"[bold red]{error_msg}[/bold red]",
+            border_style="red"
+        ))
+        return jsonify({'status': 'error', 'message': error_msg}), 500
+
+if __name__ == '__main__':
+    if not all([CHATWOOT_BASE_URL, CHATWOOT_API_TOKEN, CHATWOOT_ACCOUNT_ID, MISTRAL_ENDPOINT]):
+        console.print(Panel(
+            "[bold red]Missing required environment variables![/bold red]\n"
+            "Please ensure CHATWOOT_BASE_URL, CHATWOOT_API_TOKEN, CHATWOOT_ACCOUNT_ID, and MISTRAL_ENDPOINT "
+            "are set in your .env file.",
+            border_style="red"
+        ))
+        exit(1)
+        
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 10000)))
