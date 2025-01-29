@@ -18,19 +18,20 @@ CHATWOOT_ACCOUNT_ID = os.getenv('CHATWOOT_ACCOUNT_ID')
 app = Flask(__name__)
 console = Console()
 
-def get_mistral_response(message):
-    """Get response from Mistral API using Ollama"""
+def get_llm_response(message):
+    """Get response from LLM API using Ollama"""
     try:
         # Force reload environment variables
         load_dotenv(override=True)
         
         # Load environment variables for each request
-        mistral_endpoint = os.getenv('MISTRAL_ENDPOINT')
+        ollama_endpoint = os.getenv('OLLAMA_ENDPOINT')
+        llm_model = os.getenv('LLM_MODEL', 'mistral')
         system_message = os.getenv('SYSTEM_MESSAGE', 'You are a helpful AI assistant.')
         
         headers = {'Content-Type': 'application/json'}
         payload = {
-            'model': 'mistral',
+            'model': llm_model,
             'prompt': message,
             'system': system_message,
             'stream': False
@@ -38,50 +39,34 @@ def get_mistral_response(message):
         
         # Log the request details for debugging
         console.print(Panel(
-            f"[bold cyan]Request Details[/bold cyan]\nEndpoint: {mistral_endpoint}\nSystem Message: {system_message}\nMessage: {message}",
+            f"[bold cyan]Request Details[/bold cyan]\n"
+            f"Endpoint: {ollama_endpoint}\n"
+            f"Model: {llm_model}\n"
+            f"System Message: {system_message}\n"
+            f"Message: {message}",
             border_style="cyan"
         ))
 
-        api_url = f"{mistral_endpoint}/api/generate"
+        api_url = f"{ollama_endpoint}/api/generate"
         console.print(f"[bold green]Calling API URL:[/bold green] {api_url}")
         
         response = requests.post(api_url, json=payload, headers=headers)
         response.raise_for_status()
         
         # Log the raw response for debugging
-        console.print(Panel(
-            f"[bold cyan]Mistral Raw Response[/bold cyan]\n{response.text}",
-            border_style="cyan"
-        ))
+        console.print("[bold yellow]Raw Response:[/bold yellow]")
+        console.print(response.json())
         
-        # Handle different response formats
-        data = response.json()
-        if 'response' in data:
-            return data['response']
-        elif 'choices' in data and len(data['choices']) > 0:
-            message_content = data['choices'][0].get('message', {}).get('content', '')
-            if message_content:
-                return message_content
-            return data['choices'][0].get('text', '')
-        else:
-            console.print(Panel(
-                f"[bold yellow]Unexpected Response Format[/bold yellow]\n{data}",
-                border_style="yellow"
-            ))
-            return 'I apologize, but I encountered an unexpected response format. Please try again.'
-        
+        return response.json()['response']
+    
     except requests.exceptions.RequestException as e:
-        console.print(Panel(
-            f"[bold red]Mistral API Error[/bold red]\n{str(e)}",
-            border_style="red"
-        ))
-        return f"I apologize, but I'm having trouble connecting to my AI backend: {str(e)}"
+        error_message = f"Error calling LLM API: {str(e)}"
+        console.print(f"[bold red]Error:[/bold red] {error_message}")
+        return f"I apologize, but I encountered an error: {error_message}"
     except Exception as e:
-        console.print(Panel(
-            f"[bold red]Unexpected Error[/bold red]\n{str(e)}",
-            border_style="red"
-        ))
-        return f"I apologize, but an unexpected error occurred: {str(e)}"
+        error_message = f"Unexpected error: {str(e)}"
+        console.print(f"[bold red]Error:[/bold red] {error_message}")
+        return f"I apologize, but something went wrong: {error_message}"
 
 def send_chatwoot_reply(conversation_id, message):
     """Send reply back to Chatwoot conversation"""
@@ -164,7 +149,7 @@ def chatwoot_webhook():
             return jsonify({'status': 'error', 'reason': 'missing required fields'})
         
         # Get AI response
-        ai_response = get_mistral_response(message_content)
+        ai_response = get_llm_response(message_content)
         
         console.print(Panel(
             f"[bold blue]AI Response[/bold blue]\n{ai_response}",
@@ -186,20 +171,42 @@ def chatwoot_webhook():
 
 @app.route('/update_system_message', methods=['POST'])
 def update_system_message():
-    """Update the system message at runtime"""
+    """Update the system message in the .env file"""
     try:
         data = request.get_json()
-        new_message = data.get('system_message')
-        if not new_message:
-            return jsonify({'error': 'system_message is required'}), 400
-            
-        # Update the system message environment variable
-        os.environ['SYSTEM_MESSAGE'] = new_message
+        new_system_message = data.get('system_message')
+        new_model = data.get('model')
+        
+        if not new_system_message and not new_model:
+            return jsonify({'error': 'No system_message or model provided'}), 400
+        
+        # Read all environment variables
+        with open('.env', 'r') as f:
+            env_lines = f.readlines()
+        
+        # Update the relevant lines
+        updated_lines = []
+        for line in env_lines:
+            if new_system_message and line.startswith('SYSTEM_MESSAGE='):
+                updated_lines.append(f'SYSTEM_MESSAGE="{new_system_message}"\n')
+            elif new_model and line.startswith('LLM_MODEL='):
+                updated_lines.append(f'LLM_MODEL={new_model}\n')
+            else:
+                updated_lines.append(line)
+        
+        # Write back to .env file
+        with open('.env', 'w') as f:
+            f.writelines(updated_lines)
+        
+        # Force reload of environment variables
+        load_dotenv(override=True)
+        
         return jsonify({
-            'status': 'success',
-            'message': 'System message updated successfully',
-            'new_system_message': new_message
+            'message': 'Settings updated successfully',
+            'system_message': new_system_message if new_system_message else 'unchanged',
+            'model': new_model if new_model else 'unchanged'
         })
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
