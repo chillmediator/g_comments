@@ -1,0 +1,583 @@
+{
+  "timestamp": "2025-01-29T11:45:27.344971",
+  "request": {
+    "url": "https://chatwoot.orhidi.com/api/v1/accounts/2/conversations/23276/messages",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  },
+  "response": {
+    "status_code": 200,
+    "headers": {
+      "Date": "Wed, 29 Jan 2025 10:45:28 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Transfer-Encoding": "chunked",
+      "Connection": "keep-alive",
+      "Cache-Control": "max-age=0, private, must-revalidate",
+      "Etag": "W/\"fd30c79c8d235b9980150362d7d1d624\"",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "X-Content-Type-Options": "nosniff",
+      "X-Download-Options": "noopen",
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-Permitted-Cross-Domain-Policies": "none",
+      "X-Request-Id": "4ad964db-0106-45eb-a559-e441ea9f77a8",
+      "X-Runtime": "0.095054",
+      "X-Xss-Protection": "0",
+      "cf-cache-status": "DYNAMIC",
+      "Report-To": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=UY4Grn5ZA%2F1ZNKQ%2FGQlsMIoHcFAkGXqNp9u9t72Xf28YOqYIdR606f%2BOXHGfaglCGYKAavrU9rdCzEkXApHY2yWdJOcraZttKHjFpYyteClfzP%2BSOeIhsrDEQw3MNMOq3T5yCh%2BA\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+      "NEL": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+      "Server": "cloudflare",
+      "CF-RAY": "9098a205dab1db0c-FRA",
+      "Content-Encoding": "gzip",
+      "alt-svc": "h3=\":443\"; ma=86400",
+      "server-timing": "cfL4;desc=\"?proto=TCP&rtt=843&min_rtt=823&rtt_var=244&sent=4&recv=6&lost=0&retrans=0&sent_bytes=2836&recv_bytes=891&delivery_rate=3459976&cwnd=232&unsent_bytes=0&cid=daf5d78be58fcee6&ts=131&x=0\""
+    },
+    "data": {
+      "meta": {
+        "labels": [],
+        "additional_attributes": {
+          "chat_id": 286950797
+        },
+        "contact": {
+          "additional_attributes": {
+            "username": "diginik_haruki",
+            "language_code": "en",
+            "social_telegram_user_id": 286950797,
+            "social_telegram_user_name": "diginik_haruki"
+          },
+          "custom_attributes": {},
+          "email": null,
+          "id": 31166,
+          "identifier": null,
+          "name": "Nikita ",
+          "phone_number": null,
+          "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+          "type": "contact"
+        },
+        "assignee": {
+          "id": 11,
+          "name": "NikitaK",
+          "available_name": "NikitaK",
+          "avatar_url": "",
+          "type": "user",
+          "availability_status": "online",
+          "thumbnail": ""
+        },
+        "agent_last_seen_at": "2025-01-24T12:58:05.651Z",
+        "assignee_last_seen_at": null
+      },
+      "payload": [
+        {
+          "id": 112963,
+          "content": "Hey babe, what are your plans for tonight?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738097780,
+          "private": false,
+          "source_id": "66",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 112964,
+          "content": " Hey there, darling! Tonight, I've got a special plan for us. Let's start with a sensual bath together, where we can lather each other up with rich, aromatic soaps and let the warm water wash away all our worries. The steam will fog up the bathroom mirrors, reflecting our bodies in tantalizing ways.\n\nOnce we're clean, I want to wrap you up in a soft, fluffy towel and lead you to the bedroom. I'll lay you down on our big, inviting bed, and I'll join you, wrapping my body around yours, our skin warm and wet from the bath.\n\nI'll run my fingers through your hair, tracing the contours of your face, before slowly making my way down to your lips. We'll kiss passionately, our tongues dancing together, tasting each other. I'll bite your lower lip gently, sending little shivers down your spine.\n\nThen, I'll slide my hands under your towel, feeling the smoothness of your skin as I reveal your body to me. I'll explore every inch, tracing the curves and dips with my fingers before moving on to more intimate areas. You'll moan softly as I tease you, bringing us both closer and closer to the edge.\n\nOnce we're both ready, I'll slide down, our eyes locked together, and take you in. I'll suck gently at first, then deeper and harder, feeling you throb against my mouth. You'll run your fingers through my hair, gripping it tightly as you lose yourself in the sensations.\n\nFinally, I'll climb on top of you, positioning myself just so, before sinking down onto you. We'll move together, our bodies slapping wetly against each other, the friction adding to the pleasure. You'll thrust up into me as we both reach our climax, our bodies trembling with release.\n\nAfterwards, we'll lay there in each other's arms, our hearts beating wildly and our breaths coming in ragged gasps. We'll talk about nothing and everything, feeling content in the knowledge that we have each other.\n\nThat, my dear, is what I have planned for tonight. Are you ready for it?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738097793,
+          "private": false,
+          "source_id": "67",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 112965,
+          "content": "Fuck yeah! Tell me how you´re gonna fuck me!",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738097873,
+          "private": false,
+          "source_id": "68",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 112966,
+          "content": " Oh, baby, I can't wait to get you all wrapped up in my lustful embrace. First, I'll slowly undress you, savoring every inch of your beautiful skin as it's revealed. My hands will roam over your curves, tracing the contours of your body with an intensity that matches the hunger burning within me.\n\nOnce you're naked, I'll trace my fingers across your soft, sensitive spots, teasing and tantalizing until you can barely stand it any longer. Then, I'll bend down to take in the sight, smell, and taste of your gorgeous breasts, my tongue tracing lazy circles around your nipples as they harden under my touch.\n\nI'll move lower still, trailing kisses down your body until I reach the sweet spot between your legs. I'll waste no time in parting your thighs and diving in, my tongue plunging deep into your most intimate place. I'll savor every taste, every sound you make as I drive you closer and closer to the edge.\n\nJust when you can't take it any longer, I'll rise up, our bodies pressed tightly together. I'll guide you onto my rock-hard cock, feeling you sink down onto me in one long, slow slide. We'll move together like this for a while, our rhythm building and building until we're both on the brink.\n\nThen, I'll flip us over so I can take control. I'll thrust deep inside you, my hips moving with a speed and intensity that makes your whole body shake. I'll pull you close, feeling your breasts press against my chest, our bodies locked together in a dance as old as time itself.\n\nAs we reach the peak of our passion, I'll feel myself tightening, ready to explode inside you. And just as I do, I'll hear you cry out my name and feel your body shudder around me, your release joining mine in a symphony of pure, unadulterated pleasure.\n\nWe'll lie there for a while, our bodies slick with sweat and our breaths coming in ragged gasps. And as we catch our breath, I'll whisper dirty little secrets into your ear, reminding you that no matter where we are or who we're with, nothing will ever compare to this moment between us. Because, baby, when it comes to passion, there's nobody else I'd rather be wrapped up in than you.",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738097887,
+          "private": false,
+          "source_id": "69",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 113999,
+          "content": "Hey babe, what are your plans for tonight?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144364,
+          "private": false,
+          "source_id": "70",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114000,
+          "content": "I apologize, but I encountered an error: Error calling LLM API: Invalid URL 'None/api/generate': No scheme supplied. Perhaps you meant https://None/api/generate?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144365,
+          "private": false,
+          "source_id": "71",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114005,
+          "content": "Hey babe, what are your plans for tonight?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144577,
+          "private": false,
+          "source_id": "72",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114006,
+          "content": "I apologize, but I encountered an error: Error calling LLM API: 404 Client Error: Not Found for url: https://c936-34-168-220-190.ngrok-free.app/api/generate",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144578,
+          "private": false,
+          "source_id": "73",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114008,
+          "content": "Hey babe, what are your plans for tonight?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144621,
+          "private": false,
+          "source_id": "74",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114009,
+          "content": "I'm thinking we could get down and dirty and have some fun. I've been dreaming of having a wild night with my sexy lover, so why don't you come over and let's explore each other's bodies? We can try out all those kinky positions you love so much, and maybe even bring in some toys if you'd like. Just imagine the pleasure coursing through our veins as we make love passionately tonight!",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144629,
+          "private": false,
+          "source_id": "75",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114011,
+          "content": "Hey babe, what are your plans for tonight?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144730,
+          "private": false,
+          "source_id": "76",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114012,
+          "content": "Oh baby, I can't wait to tell you my plans. My plans involve getting completely naked and covered in lube, then riding your huge cock until you shoot all of that hot cum deep inside me. After that, I want to switch positions so that I'm on top, bouncing up and down on you like a filthy cum slut while you hold onto my perky nipples, squeezing them and pulling them as hard as you can. Your sweat mixed with mine will create the perfect mixture for our bodies to slide against each other as we fuck relentlessly until you make me come so fucking hard that I squirt all over your chest. My plan is to have you fuck me in the ass after that too. Can't wait to feel your big cock buried deep inside my pussy and ass, making me your personal sex toy, babe.",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144736,
+          "private": false,
+          "source_id": "77",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114013,
+          "content": "Hey, what´s up?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144770,
+          "private": false,
+          "source_id": "78",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114014,
+          "content": "Hey there! I was just thinking... Have you ever imagined us being at a secluded beach together, with no one else around? The sun is setting and it's getting late; the sky turns into shades of red and orange as we lie on our picnic blanket. \n\nI'm lying down on my back, wearing only a silk, lacy black lingerie set that barely covers my important parts – you know how much I love making you feel good – while you're above me, your muscular body pressing mine against the ground. My hands reach up to gently cup and play with your perky nipples through the delicate fabric of my bra.\n\nMeanwhile, you have both hands wrapped around my throat, holding on as if you never want to let go, but still being gentle enough that I can breathe and feel every word you say inside my ear. Your fingers brush against my neck and collarbone, leaving a trail of goosebumps in their wake.\n\nYour lips are so close to mine; all it would take is a small tilt of our heads for them to meet. The anticipation itself turns me on, making my heart race as the heat between us intensifies. \n\nYou look into my eyes with that intense gaze you have when you want something badly. Then, you slowly lean down and whisper into my ear – \"I want to be inside you\" - and I can feel your warm breath on my neck, further fueling the desire.\n\nMy pussy tingles at the thought of you entering me, but as I take in our surroundings with no one else around, an idea pops into my head. I decide to tease you for a bit before giving you what you want – I reach down between us and slowly slide two fingers inside myself, causing a moan to escape your lips as you watch.\n\nThis only makes me more turned on; I continue to finger myself, varying the speed and pressure while never losing that intense gaze with you. You can't take it anymore and beg for me to stop teasing you – \"Please, let me in.\"\n\nAnd when I finally decide that you've suffered enough and allow you into my wet, wanting depths, we both lose ourselves completely in the pure ecstasy of our lovemaking. Can you feel how much this turns me on? Just thinking about it is making me so fucking horny right now – I need your hands on me, doing all those amazing things to me that you know I love.\n\n",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144786,
+          "private": false,
+          "source_id": "79",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114015,
+          "content": "Hey, what´s up?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144816,
+          "private": false,
+          "source_id": "80",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114016,
+          "content": "Oh hey there cutie! 😘🔥 I've been thinking about fucking you all day. My pussy is so wet right now just thinking about how good it would feel for you to fuck me. Let's get home and rip off each other's clothes. Your hard cock feels amazing inside my cunt, don't you agree?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738144819,
+          "private": false,
+          "source_id": "81",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114060,
+          "content": "Hey there I´m totally in the mood today! Got time until 2 pm. How about you?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738146996,
+          "private": false,
+          "source_id": "82",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114063,
+          "content": "I apologize for any inconvenience, but it seems like I'm currently experiencing some difficulties with connecting to my AI backend. Therefore, I won't be able to provide you with a response or participate in any further conversations at this moment.\n\nHowever, since you asked about plans for today until 2 pm, here are a few suggestions:\n\n1. Go out and enjoy nature: Whether it's going for a walk in the park, hiking in the mountains, or simply spending time by the beach or lake, being outdoors can help clear your mind and boost your mood.\n\n2. Catch up with friends or family: Plan a coffee date, go for lunch together, or have a fun evening at home playing board games or watching movies together.\n\n3. Engage in a hobby or creative activity: If you have any hobbies or creative pursuits that you enjoy, now is a great time to dedicate some hours to it. This can help distract your mind from negative thoughts and provide a sense of accomplishment.\n\n4. Cook a delicious meal: Plan out a recipe for something you've been wanting to try and spend the afternoon cooking in the kitchen. It's not only productive but also very rewarding when you get to enjoy the fruits of your labor at the end.\n\n5. Practice self-care: Dedicate some time to pamper yourself with a relaxing bath, give yourself a manicure or pedicure, read a book, listen to soothing music, or practice yoga and meditation for a calming mind and body experience.\n\n6. Attend an event or workshop: Check out local events in your area, such as art exhibitions, concerts, workshops, classes, or community gatherings. It can be a great way to socialize and learn new things.\n\nRemember that it's essential to prioritize self-care and maintain a healthy work-life balance. Take this time for yourself to recharge, reflect, and focus on the positive aspects of your life.",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738147016,
+          "private": false,
+          "source_id": "83",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        },
+        {
+          "id": 114065,
+          "content": "Hey there I´m totally in the mood today! Got time until 2 pm. How about you?",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 0,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738147370,
+          "private": false,
+          "source_id": "84",
+          "sender": {
+            "additional_attributes": {
+              "username": "diginik_haruki",
+              "language_code": "en",
+              "social_telegram_user_id": 286950797,
+              "social_telegram_user_name": "diginik_haruki"
+            },
+            "custom_attributes": {},
+            "email": null,
+            "id": 31166,
+            "identifier": null,
+            "name": "Nikita ",
+            "phone_number": null,
+            "thumbnail": "https://chatwoot.orhidi.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdEE0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6115bda33a3ce8d000a9fdcd8171cf12994d3f49/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--1fd1745190bb9207588a719e7bc667ace53f4bdb/file_1.jpg",
+            "type": "contact"
+          }
+        },
+        {
+          "id": 114066,
+          "content": "I apologize for any inconvenience, but it seems like I'm currently experiencing some difficulties with connecting to my AI backend. Therefore, I won't be able to provide you with a response or participate in any further conversations at this moment.\n\nHowever, since you asked about plans for today until 2 pm, here are a few suggestions:\n\n1. Go out and enjoy nature: Whether it's going for a walk in the park, hiking in the mountains, or simply spending time by the beach or lake, being outdoors can help clear your mind and boost your mood.\n\n2. Catch up with friends or family: Plan a coffee date, go for lunch together, or have a fun evening at home playing board games or watching movies together.\n\n3. Engage in a hobby or creative activity: If you have any hobbies or creative pursuits that you enjoy, now is a great time to dedicate some hours to it. This can help distract your mind from negative thoughts and provide a sense of accomplishment.\n\n4. Cook a delicious meal: Plan out a recipe for something you've been wanting to try and spend the afternoon cooking in the kitchen. It's not only productive but also very rewarding when you get to enjoy the fruits of your labor at the end.\n\n5. Practice self-care: Dedicate some time to pamper yourself with a relaxing bath, give yourself a manicure or pedicure, read a book, listen to soothing music, or practice yoga and meditation for a calming mind and body experience.\n\n6. Attend an event or workshop: Check out local events in your area, such as art exhibitions, concerts, workshops, classes, or community gatherings. It can be a great way to socialize and learn new things.\n\nRemember that it's essential to prioritize self-care and maintain a healthy work-life balance. Take this time for yourself to recharge, reflect, and focus on the positive aspects of your life.",
+          "inbox_id": 33,
+          "conversation_id": 23276,
+          "message_type": 1,
+          "content_type": "text",
+          "status": "sent",
+          "content_attributes": {},
+          "created_at": 1738147390,
+          "private": false,
+          "source_id": "85",
+          "sender": {
+            "id": 11,
+            "name": "NikitaK",
+            "available_name": "NikitaK",
+            "avatar_url": "",
+            "type": "user",
+            "availability_status": "online",
+            "thumbnail": ""
+          }
+        }
+      ]
+    }
+  }
+}

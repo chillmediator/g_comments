@@ -5,10 +5,21 @@ from rich.panel import Panel
 from rich.pretty import pprint
 from datetime import datetime
 import requests
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-# Load environment variables
-load_dotenv()
+# Initialize console
+console = Console()
+
+def reload_env():
+    """Reload environment variables from .env file"""
+    dotenv_path = find_dotenv()
+    if dotenv_path:
+        load_dotenv(dotenv_path, override=True)
+    else:
+        console.print("[bold red]Warning:[/bold red] No .env file found")
+
+# Initial load of environment variables
+reload_env()
 
 # Configuration
 CHATWOOT_BASE_URL = os.getenv('CHATWOOT_BASE_URL')
@@ -16,57 +27,179 @@ CHATWOOT_API_TOKEN = os.getenv('CHATWOOT_API_TOKEN')
 CHATWOOT_ACCOUNT_ID = os.getenv('CHATWOOT_ACCOUNT_ID')
 
 app = Flask(__name__)
-console = Console()
 
-def get_llm_response(message):
-    """Get response from LLM API using Ollama"""
-    try:
-        # Force reload environment variables
-        load_dotenv(override=True)
+def get_conversation_history(conversation_id, max_messages=50):
+    """
+    Fetch and format conversation history from Chatwoot for a specific conversation.
+    
+    Args:
+        conversation_id (str): The ID of the conversation to fetch
+        max_messages (int): Maximum number of messages to include in context
         
-        # Load environment variables for each request
-        ollama_endpoint = os.getenv('OLLAMA_ENDPOINT')
-        llm_model = os.getenv('LLM_MODEL', 'mistral')
+    Returns:
+        str: Formatted conversation history for LLM context
+    """
+    try:
+        # Validate environment variables
+        if not all([CHATWOOT_BASE_URL, CHATWOOT_API_TOKEN, CHATWOOT_ACCOUNT_ID]):
+            raise ValueError("Missing required Chatwoot environment variables")
+
+        url = f"{CHATWOOT_BASE_URL}/api/v1/accounts/{CHATWOOT_ACCOUNT_ID}/conversations/{conversation_id}/messages"
+        headers = {
+            'api_access_token': CHATWOOT_API_TOKEN,
+            'Content-Type': 'application/json'
+        }
+
+        # Make API request
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+        
+        # Extract messages from payload
+        messages = []
+        if isinstance(data, dict):
+            messages = data.get('payload', [])
+        elif isinstance(data, list):
+            messages = data
+            
+        if not messages:
+            console.print("[yellow]No messages found in conversation history[/yellow]")
+            return ""
+        
+        # Format messages
+        formatted_history = []
+        message_count = 0
+        
+        # Process messages in chronological order (oldest first)
+        for message in messages:
+            # Skip empty content
+            content = message.get('content', '').strip()
+            if not content:
+                continue
+                
+            # Get message type (0 = incoming/user, 1 = outgoing/assistant)
+            message_type = message.get('message_type')
+            if message_type not in (0, 1):
+                continue
+                
+            # Format message
+            prefix = "User:" if message_type == 0 else "Assistant:"
+            formatted_history.append(f"{prefix} {content}")
+            
+            message_count += 1
+            if message_count >= max_messages:
+                break
+        
+        # Combine messages into context string
+        context = "\n".join(formatted_history)
+        
+        # Log success
+        console.print(Panel(
+            f"[bold green]Successfully Retrieved History[/bold green]\n"
+            f"Messages processed: {message_count}",
+            border_style="green"
+        ))
+        
+        return context
+
+    except requests.exceptions.RequestException as e:
+        console.print(f"[bold red]API Error:[/bold red] Error fetching conversation history: {str(e)}")
+        return ""
+    except Exception as e:
+        console.print(f"[bold red]Error:[/bold red] Unexpected error while fetching history: {str(e)}")
+        return ""
+
+def get_llm_response(message, conversation_id=None):
+    """
+    Get a response from the LLM API with conversation history context
+    
+    Args:
+        message (str): The user's message to respond to
+        conversation_id (str, optional): The conversation ID to fetch history for
+        
+    Returns:
+        str: The AI's response
+    """
+    try:
+        # Reload environment variables to ensure we have the latest values
+        reload_env()
+        
+        # Get conversation history if available
+        context = ""
+        if conversation_id:
+            context = get_conversation_history(conversation_id)
+        
+        # Construct the prompt with fresh environment variables
         system_message = os.getenv('SYSTEM_MESSAGE', 'You are a helpful AI assistant.')
         
-        headers = {'Content-Type': 'application/json'}
-        payload = {
-            'model': llm_model,
-            'prompt': message,
-            'system': system_message,
-            'stream': False
-        }
-        
-        # Log the request details for debugging
+        # Build the full prompt with history and current message
+        if context:
+            full_prompt = f"{system_message}\n\nConversation history:\n{context}\n\nUser: {message}\nAssistant:"
+        else:
+            full_prompt = f"{system_message}\n\nUser: {message}\nAssistant:"
+            
+        # Log the prompt for debugging
         console.print(Panel(
-            f"[bold cyan]Request Details[/bold cyan]\n"
-            f"Endpoint: {ollama_endpoint}\n"
-            f"Model: {llm_model}\n"
+            f"[bold cyan]Prompt Details[/bold cyan]\n"
             f"System Message: {system_message}\n"
-            f"Message: {message}",
+            f"Has History: {'Yes' if context else 'No'}",
             border_style="cyan"
         ))
-
-        api_url = f"{ollama_endpoint}/api/generate"
-        console.print(f"[bold green]Calling API URL:[/bold green] {api_url}")
         
-        response = requests.post(api_url, json=payload, headers=headers)
+        # Prepare API request with fresh environment variables
+        endpoint = os.getenv('OLLAMA_ENDPOINT')
+        model = os.getenv('LLM_MODEL', 'dolphin3')
+        
+        if not endpoint:
+            raise ValueError("OLLAMA_ENDPOINT environment variable is not set")
+        
+        console.print(Panel(
+            f"[bold cyan]Request Details[/bold cyan]\n"
+            f"Endpoint: {endpoint}\n"
+            f"Model: {model}\n"
+            f"System Message: {system_message}\n"
+            f"Prompt: {message}",
+            border_style="cyan"
+        ))
+        
+        # Make API request
+        url = f"{endpoint}/api/generate"
+        response = requests.post(url, json={
+            'model': model,
+            'prompt': full_prompt,
+            'stream': False
+        })
         response.raise_for_status()
         
-        # Log the raw response for debugging
-        console.print("[bold yellow]Raw Response:[/bold yellow]")
-        console.print(response.json())
+        # Parse response
+        response_data = response.json()
+        if 'response' not in response_data:
+            raise ValueError(f"Unexpected API response format: {response_data}")
+            
+        # Log raw response for debugging
+        console.print("[bold yellow]Raw LLM Response:[/bold yellow]")
+        console.print(response_data)
         
-        return response.json()['response']
-    
+        ai_response = response_data['response'].strip()
+        
+        # Log the final response
+        console.print(Panel(
+            f"[bold green]AI Response[/bold green]\n"
+            f"{ai_response}",
+            border_style="green"
+        ))
+        
+        return ai_response
+        
     except requests.exceptions.RequestException as e:
-        error_message = f"Error calling LLM API: {str(e)}"
+        error_message = f"API Error: {str(e)}"
         console.print(f"[bold red]Error:[/bold red] {error_message}")
-        return f"I apologize, but I encountered an error: {error_message}"
+        return "I apologize, but I'm having trouble connecting to my language model right now. Please try again in a moment."
+        
     except Exception as e:
         error_message = f"Unexpected error: {str(e)}"
         console.print(f"[bold red]Error:[/bold red] {error_message}")
-        return f"I apologize, but something went wrong: {error_message}"
+        return "I apologize, but I encountered an unexpected error. Please try again."
 
 def send_chatwoot_reply(conversation_id, message):
     """Send reply back to Chatwoot conversation"""
@@ -149,7 +282,7 @@ def chatwoot_webhook():
             return jsonify({'status': 'error', 'reason': 'missing required fields'})
         
         # Get AI response
-        ai_response = get_llm_response(message_content)
+        ai_response = get_llm_response(message_content, conversation_id=conversation_id)
         
         console.print(Panel(
             f"[bold blue]AI Response[/bold blue]\n{ai_response}",
@@ -199,7 +332,7 @@ def update_system_message():
             f.writelines(updated_lines)
         
         # Force reload of environment variables
-        load_dotenv(override=True)
+        reload_env()
         
         return jsonify({
             'message': 'Settings updated successfully',
