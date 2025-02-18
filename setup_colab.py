@@ -85,7 +85,11 @@ async def main():
     """Main setup function"""
     # Install Ollama
     console.print("\n[bold blue]Step 1: Installing Ollama...[/bold blue]")
-    await run_process(['curl', 'https://ollama.ai/install.sh', '|', 'sh'])
+    import requests
+    response = requests.get('https://ollama.ai/install.sh')
+    with open('install.sh', 'w') as f:
+        f.write(response.text)
+    await run_process(['bash', 'install.sh'])
     
     # Wait for server
     console.print("\n[bold blue]Step 2: Waiting for Ollama server...[/bold blue]")
