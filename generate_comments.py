@@ -8,9 +8,15 @@ import time
 import os
 from typing import Dict, List
 import argparse
+from dotenv import load_dotenv
 
 # Initialize console for nice output
 console = Console()
+
+# Load environment variables
+load_dotenv()
+OLLAMA_ENDPOINT = os.getenv('OLLAMA_ENDPOINT', 'http://localhost:11434')
+LLM_MODEL = os.getenv('LLM_MODEL', 'dolphin3')  # Default to dolphin3 as used in Colab
 
 def parse_arguments():
     """Parse command line arguments"""
@@ -25,12 +31,24 @@ async def wait_for_server(max_attempts=5):
     """Wait for Ollama server to be ready"""
     for i in range(max_attempts):
         try:
-            response = requests.get('http://localhost:11434')
+            # Try the /api/generate endpoint with a simple test
+            response = requests.post(
+                f"{OLLAMA_ENDPOINT}/api/generate",
+                json={
+                    "model": LLM_MODEL,
+                    "prompt": "Say hello",
+                    "stream": False
+                }
+            )
+            console.print(f"Response status: {response.status_code}")
+            console.print(f"Response content: {response.text[:200]}")  # Show first 200 chars of response
+            
             if response.status_code == 200:
                 console.print("[green]LLM server is ready![/green]")
                 return True
-        except:
-            pass
+        except Exception as e:
+            console.print(f"[red]Error connecting to server: {str(e)}[/red]")
+            
         console.print(f"[yellow]Waiting for server... attempt {i+1}/{max_attempts}[/yellow]")
         await asyncio.sleep(2)
     return False
@@ -60,17 +78,19 @@ async def run_inference(system_prompt: str, user_prompt: str, language: str, arg
 
         # Make API call to the LLM
         response = requests.post(
-            'http://localhost:11434/api/generate',
+            f"{OLLAMA_ENDPOINT}/api/generate",
             json={
-                "model": "mistral",
+                "model": LLM_MODEL,
                 "prompt": f"{system_prompt}\n\n{formatted_user_prompt}",
                 "stream": False
             }
         )
         
         if response.status_code != 200:
-            raise Exception(f"API call failed with status {response.status_code}")
-
+            console.print(f"[red]API call failed with status {response.status_code}[/red]")
+            console.print(f"[red]Response: {response.text}[/red]")
+            return []
+            
         response_data = response.json()
         
         # Extract the CSV content from between <comments> tags
@@ -79,7 +99,9 @@ async def run_inference(system_prompt: str, user_prompt: str, language: str, arg
         end_idx = response_text.find('</comments>')
         
         if start_idx == -1 or end_idx == -1:
-            raise Exception("Could not find comments section in response")
+            console.print("[red]Could not find comments section in response[/red]")
+            console.print("Response text:", response_text[:200])  # Show first 200 chars
+            return []
             
         csv_content = response_text[start_idx:end_idx].strip()
         
